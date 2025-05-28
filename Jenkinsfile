@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SCANNER_HOME = tool 'sonar-scanner' // 👈 Must match name in Jenkins > Global Tool Config
+        SCANNER_HOME = tool 'sonar-scanner' 
     }
 
     stages {
