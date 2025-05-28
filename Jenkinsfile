@@ -18,19 +18,15 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('Jenkins-sonar-server') {
-                    sh """
-                        ${SCANNER_HOME}/bin/sonar-scanner \
-                            -Dsonar.projectKey=New-project-key \
-                            -Dsonar.projectName=New-project-key \
-                            -Dsonar.sources=. \
-                            -Dsonar.sourceEncoding=UTF-8
-                    """
-                }
-            }
-        }
+       stage('SonarQube Analysis') {
+  steps {
+    withSonarQubeEnv('Jenkins-sonar-server') {
+      // Use the installed Sonar Scanner
+      def scannerHome = tool 'SonarQubeScanner'
+      sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=New-project-key -Dsonar.projectName=New-project-key -Dsonar.sources=. -Dsonar.sourceEncoding=UTF-8"
+    }
+  }
+}
 
         stage('Quality Gate') {
             steps {
