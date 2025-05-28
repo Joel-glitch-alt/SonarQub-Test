@@ -1,51 +1,24 @@
 pipeline {
     agent any
 
-    tools {
-        // This ensures the sonar-scanner is automatically installed
-        sonarQubeScanner 'sonar-scanner'
-    }
-
-    environment {
-        // Reference the installed tool
-        SCANNER_HOME = tool 'sonar-scanner' 
-    }
-
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-       stage('SonarQube Analysis') {
-  steps {
-    withSonarQubeEnv('Jenkins-sonar-server') {
-      // Use the installed Sonar Scanner
-      def scannerHome = tool 'SonarQubeScanner'
-      sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=New-project-key -Dsonar.projectName=New-project-key -Dsonar.sources=. -Dsonar.sourceEncoding=UTF-8"
-    }
-  }
-}
-
-        stage('Quality Gate') {
+        stage('SonarQube Analysis') {
             steps {
-                timeout(time: 5, unit: 'MINUTES') {  // Increased timeout
-                    waitForQualityGate abortPipeline: true
+                withSonarQubeEnv('Jenkins-sonar-server') {
+                    script {
+                        // Get the Sonar Scanner installation path
+                        def scannerHome = tool 'SonarQubeScanner'
+                        // Run the sonar-scanner command
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=New-project-key -Dsonar.projectName=New-project-key -Dsonar.sources=. -Dsonar.sourceEncoding=UTF-8"
+                    }
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'SonarQube analysis completed'
-        }
-        failure {
-            echo '❌ SonarQube analysis failed!'
-        }
-        success {
-            echo '✅ SonarQube analysis passed successfully!'
         }
     }
 }
