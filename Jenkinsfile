@@ -2,33 +2,31 @@ pipeline {
     agent any
 
     environment {
-        SONAR_SCANNER_HOME = tool 'sonar-scanner' // Make sure you configured this in Jenkins -> Global Tool Configuration
+        SCANNER_HOME = tool 'sonar-scanner' // 👈 Must match name in Jenkins > Global Tool Config
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/Joel-glitch-alt/SonarQub-Test.git'
+                checkout scm
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('Jenkins-sonar-server') { // Match your Jenkins SonarQube server config name
-                    sh """
-                        ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
-                          -Dsonar.projectKey=New-project-key \
-                          -Dsonar.projectName=New-project-key \
-                          -Dsonar.sources=. \
-                          -Dsonar.sourceEncoding=UTF-8
-                    """
+                withSonarQubeEnv('Jenkins-sonar-server') {
+                    sh "${SCANNER_HOME}/bin/sonar-scanner " +
+                       "-Dsonar.projectKey=New-project-key " +
+                       "-Dsonar.projectName=New-project-key " +
+                       "-Dsonar.sources=. " +
+                       "-Dsonar.sourceEncoding=UTF-8"
                 }
             }
         }
 
         stage('Quality Gate') {
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
+                timeout(time: 1, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
@@ -36,11 +34,11 @@ pipeline {
     }
 
     post {
-        success {
-            echo '✅ SonarQube analysis passed!'
-        }
         failure {
             echo '❌ SonarQube analysis failed!'
+        }
+        success {
+            echo '✅ SonarQube analysis passed!'
         }
     }
 }
