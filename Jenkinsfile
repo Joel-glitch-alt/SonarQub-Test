@@ -17,8 +17,8 @@ pipeline {
                 withSonarQubeEnv('Jenkins-sonar-server') { // Match your Jenkins SonarQube server config name
                     sh """
                         ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
-                          -Dsonar.projectKey=new_project_key \
-                          -Dsonar.projectName=New_Project_Name \
+                          -Dsonar.projectKey=New-project-key \
+                          -Dsonar.projectName=New-project-key \
                           -Dsonar.sources=. \
                           -Dsonar.sourceEncoding=UTF-8
                     """
