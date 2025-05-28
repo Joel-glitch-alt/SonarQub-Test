@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/Joel-glitch-alt/your-new-project.git', branch: 'master'
+                git url: 'https://github.com/Joel-glitch-alt/SonarQub-Test.git'
             }
         }
 
