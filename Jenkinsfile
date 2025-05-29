@@ -70,6 +70,14 @@
             }
         }
 
+
+          stage('Fix Jest Permissions') {
+    steps {
+        sh 'chmod +x ./node_modules/.bin/jest'
+     }
+  }
+
+
         stage('Run Tests and Coverage') {
             steps {
                 sh 'npx jest --coverage'
