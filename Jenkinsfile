@@ -50,7 +50,7 @@ pipeline {
     agent any
 
     tools {
-    nodejs "NodeJS_18" // The name you gave in Jenkins
+    nodejs "NodeJS_18" // The name you gave in Jenkins.
    }
 
     environment {
