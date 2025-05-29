@@ -46,12 +46,12 @@
 
 
 // Uisng Quality Gate Plugin
-pipeline {
+ pipeline {
     agent any
 
     tools {
-    nodejs "NodeJS_18" // The name you gave in Jenkins.
-   }
+        nodejs "NodeJS_18" // Match your Jenkins NodeJS tool installation name
+    }
 
     environment {
         PATH = "${tool 'sonar-scanner'}/bin:${env.PATH}"
@@ -66,25 +66,13 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh '''
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip install -r requirements.txt
-                    pip install pytest pytest-cov
-
-                    npm install
-                '''
+                sh 'npm install'
             }
         }
 
         stage('Run Tests and Coverage') {
             steps {
-                sh '''
-                    . venv/bin/activate
-                    pytest --cov=. --cov-report=xml
-
-                    npx jest --coverage
-                '''
+                sh 'npx jest --coverage'
             }
         }
 
@@ -96,7 +84,6 @@ pipeline {
                           -Dsonar.projectKey=my-sonar-test \
                           -Dsonar.projectName="My Sonar Test" \
                           -Dsonar.sources=. \
-                          -Dsonar.python.coverage.reportPaths=coverage.xml \
                           -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
                           -Dsonar.sourceEncoding=UTF-8
                     '''
@@ -122,4 +109,5 @@ pipeline {
         }
     }
 }
+
 

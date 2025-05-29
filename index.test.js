@@ -1,4 +1,4 @@
-const server = require('./main'); // adjust if your file is named differently
+const server = require('./main');
 const http = require('http');
 
 const PORT = 3000;
@@ -24,7 +24,7 @@ afterAll(done => {
 test('GET / returns 200 and HTML content', async () => {
   const res = await httpGet('/');
   expect(res.status).toBe(200);
-  expect(res.data).toContain('<!DOCTYPE html>'); // Assuming your index.html starts with this
+  expect(res.data).toContain('<!DOCTYPE html>');  // adjust if your index.html content differs
 });
 
 test('GET /nonexistent returns 404', async () => {
