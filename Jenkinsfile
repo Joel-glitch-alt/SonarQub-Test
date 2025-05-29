@@ -49,10 +49,10 @@
 pipeline {
     agent any
 
-    tools {
-        // Remove this if you installed sonar-scanner manually
-        // Or replace 'sonar-scanner' with a real tool name
-    }
+    // tools {
+    //     // Remove this if you installed sonar-scanner manually
+    //     // Or replace 'sonar-scanner' with a real tool name
+    // }
 
     environment {
         PATH = "${tool 'sonar-scanner'}/bin:${env.PATH}"
