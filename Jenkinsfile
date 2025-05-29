@@ -49,10 +49,9 @@
 pipeline {
     agent any
 
-    // tools {
-    //     // Remove this if you installed sonar-scanner manually
-    //     // Or replace 'sonar-scanner' with a real tool name
-    // }
+    tools {
+    nodejs "NodeJS_18" // The name you gave in Jenkins
+   }
 
     environment {
         PATH = "${tool 'sonar-scanner'}/bin:${env.PATH}"
