@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1748514545677" clover="3.2.0">
-  <project timestamp="1748514545677" name="All files">
+<coverage generated="1748515151423" clover="3.2.0">
+  <project timestamp="1748515151423" name="All files">
     <metrics statements="24" coveredstatements="20" conditionals="12" coveredconditionals="10" methods="3" coveredmethods="2" elements="39" coveredelements="32" complexity="0" loc="24" ncloc="24" packages="1" files="1" classes="1"/>
     <file name="main.js" path="C:\Users\jjDok\Desktop\JenkinsPro2\main.js">
       <metrics statements="24" coveredstatements="20" conditionals="12" coveredconditionals="10" methods="3" coveredmethods="2"/>

@@ -46,15 +46,17 @@
 
 
 // Uisng Quality Gate Plugin
+ 
  pipeline {
     agent any
 
     tools {
         nodejs "NodeJS_18" // Match your Jenkins NodeJS tool installation name
+        // Assuming sonar-scanner tool configured as "sonar-scanner"
     }
 
     environment {
-        PATH = "${tool 'sonar-scanner'}/bin:${env.PATH}"
+        PATH = "${tool('sonar-scanner')}/bin:${env.PATH}"
     }
 
     stages {
@@ -66,21 +68,16 @@
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh '''
+                  npm install
+                  chmod +x ./node_modules/.bin/jest
+                '''
             }
         }
 
-
-          stage('Fix Jest Permissions') {
-    steps {
-        sh 'chmod +x ./node_modules/.bin/jest'
-     }
-  }
-
-
         stage('Run Tests and Coverage') {
             steps {
-                sh 'npx jest --coverage'
+                sh 'npm test'
             }
         }
 
@@ -117,5 +114,6 @@
         }
     }
 }
+
 
 
